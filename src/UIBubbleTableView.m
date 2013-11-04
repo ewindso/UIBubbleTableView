@@ -22,6 +22,7 @@
 @implementation UIBubbleTableView
 
 @synthesize bubbleDataSource = _bubbleDataSource;
+@synthesize bubbleDelegate = _bubbleDelegate;
 @synthesize snapInterval = _snapInterval;
 @synthesize bubbleSection = _bubbleSection;
 @synthesize typingBubble = _typingBubble;
@@ -228,6 +229,20 @@
     cell.showAvatar = self.showAvatars;
     
     return cell;
+}
+
+// added by Elijah
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if(_bubbleDelegate) {
+        [_bubbleDelegate willBeginDragging:scrollView];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+    if(_bubbleDelegate) {
+        [_bubbleDelegate didScroll:scrollView];
+    }
 }
 
 #pragma mark - Public interface
